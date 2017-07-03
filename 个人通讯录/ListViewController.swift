@@ -101,11 +101,15 @@ class ListViewController: UITableViewController {
             
         }else {
         
+            /**
+             *  vc 强引用闭包 -> 闭包又强引用了vc 所以产生循环引用
+                解决方法: 在闭包中 weak 修饰 vc -->[weak vc] 使得闭包中的vc是可选类型
+             */
             //新建个人记录
-            vc.complectionCallBack = {
+            vc.complectionCallBack = {[weak vc] in
             
                 //获取明细控制器的Person
-                guard let p = vc.person else  {
+                guard let p = vc?.person else  {
                     return
                 }
                 
